@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <title>Gráfico Últimos 7 Dias</title>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels"></script>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f4f4f4;
+    }
+
+    .card {
+      background: linear-gradient(to bottom, #ffffff, #f3f3f3);
+      border-radius: 16px;
+      padding: 20px;
+      max-width: 320px;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+      margin: 30px auto;
+    }
+
+    .card h3 {
+      margin: 0;
+      font-size: 1.1rem;
+      font-weight: bold;
+    }
+
+    .card .total {
+      color: #2d7858;
+      font-weight: bold;
+      font-size: 1.3rem;
+    }
+
+    .card canvas {
+      margin-top: 10px;
+    }
+
+    .card .info {
+      font-size: 0.9rem;
+      color: #555;
+      margin-top: 8px;
+    }
+
+    .card .footer {
+      text-align: right;
+      font-size: 0.7rem;
+      color: #888;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="card">
+    <h3>Últimos 7 dias</h3>
+    <div class="total">R$ 632,00 - 10/04 à 16/04</div>
+    <canvas id="graficoGastos" width="300" height="200"></canvas>
+    <div class="info">📈 Seus gastos aumentaram em 20% essa semana</div>
+    <div class="footer">23:07</div>
+  </div>
+
+  <script>
+    const ctx = document.getElementById('graficoGastos').getContext('2d');
+
+    new Chart(ctx, {
+      type: 'bar',
+      data: {
+        labels: ['qui', 'sex', 'sáb', 'dom', 'seg', 'ter', 'qua'],
+        datasets: [{
+          label: 'Gastos',
+          data: [155, 105, 53, 64, 131, 52, 72],
+          backgroundColor: 'rgba(70, 148, 125, 0.6)',
+          borderRadius: 5,
+          barPercentage: 1.0,
+        }]
+      },
+      options: {
+        responsive: false,
+        plugins: {
+          legend: {
+            display: false
+          },
+          tooltip: {
+            callbacks: {
+              label: context => `R$ ${context.parsed.y},00`
+            }
+          },
+          datalabels: {
+            color: 'white',
+            anchor: 'end',
+            align: 'start',
+            font: {
+              weight: 'bold'
+            },
+            formatter: value => `${value}`
+          }
+        },
+        scales: {
+          x: {
+            grid: {
+              display: false
+            }
+          },
+          y: {
+            beginAtZero: true,
+            ticks: {
+              stepSize: 50
+            },
+            
+            grid: {
+              display: false
+            },
+            
+            border: {
+                display: false
+            },
+
+            ticks: {
+                display: false
+            }
+          }
+        }
+      },
+      plugins: [ChartDataLabels]
+    });
+  </script>
+
+</body>
+</html>
